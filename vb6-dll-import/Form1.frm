@@ -18,7 +18,7 @@ Begin VB.Form Form1
       Width           =   4935
    End
    Begin VB.CommandButton Command2 
-      Caption         =   "Show Native MsgBox (Win32)"
+      Caption         =   "Pass String and Show Message"
       Height          =   855
       Left            =   1200
       TabIndex        =   1
@@ -40,23 +40,15 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Command1_Click()
-MsgBox add(12, 32)
+MsgBox "12 + 32 = " & CStr(add(12, 32)), , MSG_TITLE
 End Sub
 
 Private Sub Command2_Click()
-Call testMsg("Hello There", AddressOf MyCallback)
+Call testMsg("Hello There. This string is passed from VB6", AddressOf CALLBACK_testMsg)
 End Sub
 
 Private Sub Command3_Click()
-Dim lastMsgHandle As Long
-Dim lastMsg As String
-
-lastMsgHandle = getLastMessage
-lastMsg = String$(1000, " ")
-
-CopyMemory ByVal lastMsg, ByVal lastMsgHandle, Len(lastMsg) - 1
-
-MsgBox "Last message: " & lastMsg
+Call testString(AddressOf CALLBACK_testString)
 End Sub
 
 Private Sub Form_Load()
